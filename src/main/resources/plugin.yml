@@ -1,0 +1,5 @@
+name: Main
+version: ${project.version}
+main: cz.craftmania.crafttweaks.crafttweaks.Main
+authors: [MrWakeCZ]
+website: https://craftmania.cz
