@@ -1,5 +1,6 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
+import cz.craftmania.crafttweaks.crafttweaks.listeners.FarmDisasterListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.FixesListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,6 +15,7 @@ public final class Main extends JavaPlugin {
         // Instance
         instance = this;
 
+        //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new FixesListener(), this);
 
     }
