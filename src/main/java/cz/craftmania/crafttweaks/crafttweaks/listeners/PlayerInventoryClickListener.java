@@ -1,13 +1,12 @@
 package cz.craftmania.crafttweaks.crafttweaks.listeners;
 
 import cz.craftmania.crafttweaks.crafttweaks.Main;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class StackingListener implements Listener {
+public class PlayerInventoryClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void inInventory(InventoryClickEvent e) {

@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class FixesListener implements Listener {
+public class PlayerInteractListener implements Listener {
 
     /*
         Oprava klikani s NameTagy na Armorstandy -> bugovani itemu (duplikace)
@@ -31,7 +31,7 @@ public class FixesListener implements Listener {
 
         if(entity instanceof ArmorStand){
             if(item.getType() == Material.NAME_TAG){
-                p.sendMessage("§cTato akce je docasne blokovana!");
+                p.sendMessage("§c§l(!) §cTato akce je blokovana!");
                 e.setCancelled(true);
             }
         }

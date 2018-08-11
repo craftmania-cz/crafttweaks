@@ -31,3 +31,9 @@ disables-and-fixes:
   # Kompletni deaktivace Pumpin, Cactus a Meloun farmy (funkcnost)
   piston-eject-blocks: false
 
+# Tweaks pro chat
+chat:
+
+  # Pokud je na true, tak hraci nebudou moct napsat jine znaky krome 0-9,A-Z
+  block-unicode: true
+

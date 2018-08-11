@@ -1,10 +1,11 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
-import cz.craftmania.crafttweaks.crafttweaks.listeners.FarmDisasterListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.FixesListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.StackingListener;
+import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerChatListener;
+import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInteractListener;
+import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInventoryClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public final class Main extends JavaPlugin {
     private static boolean waterBreakingWheat = false;
     private static boolean cactusGrowing = false;
     private static boolean pistonEjectBlocks = false;
+    private static boolean blockUnicode = true;
 
     @Override
     public void onEnable() {
@@ -26,15 +28,8 @@ public final class Main extends JavaPlugin {
         // Instance
         instance = this;
 
-        if(getConfig().getBoolean("disables-and-fixes.nametag-on-armorstand")){
-            Bukkit.getServer().getPluginManager().registerEvents(new FixesListener(), this);
-        }
-
-        if(getConfig().getBoolean("hack-minecraft.stacking.enabled")){
-            Bukkit.getServer().getPluginManager().registerEvents(new StackingListener(), this);
-        }
-
-        //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
+        // Listeners
+        loadListeners();
 
         // Konfigurace
         loadConfiguration();
@@ -56,13 +51,29 @@ public final class Main extends JavaPlugin {
         if(stackingEnabled){
             getConfig().getList("hack-minecraft.stacking.list").forEach(s -> {
                 stackingList.add(Material.getMaterial((String) s));
-                System.out.println(s);
             });
         }
         nametagsArmorstand = getConfig().getBoolean("disables-and-fixes.nametag-on-armorstand", false);
         waterBreakingWheat = getConfig().getBoolean("disables-and-fixes.water-breaking-wheat", false);
         cactusGrowing = getConfig().getBoolean("disables-and-fixes.cactus-growing", false);
         pistonEjectBlocks = getConfig().getBoolean("disables-and-fixes.piston-eject-blocks", false);
+        blockUnicode = getConfig().getBoolean("chat.block-unicode", true);
+    }
+
+    private void loadListeners() {
+        PluginManager manager = Bukkit.getServer().getPluginManager();
+
+        if(isNametagsArmorstand()){
+            manager.registerEvents(new PlayerInteractListener(), this);
+        }
+
+        if(isStackingEnabled()){
+            manager.registerEvents(new PlayerInventoryClickListener(), this);
+        }
+
+        //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
+
+        manager.registerEvents(new PlayerChatListener(this), this);
     }
 
     public static boolean isStackingEnabled() {
@@ -87,5 +98,9 @@ public final class Main extends JavaPlugin {
 
     public static boolean isPistonEjectBlocks() {
         return pistonEjectBlocks;
+    }
+
+    public boolean isBlockUnicode() {
+        return blockUnicode;
     }
 }
