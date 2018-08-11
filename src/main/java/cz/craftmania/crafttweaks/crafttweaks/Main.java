@@ -3,6 +3,8 @@ package cz.craftmania.crafttweaks.crafttweaks;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerChatListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInteractListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInventoryClickListener;
+import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
+import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
@@ -10,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
 
@@ -21,6 +24,8 @@ public final class Main extends JavaPlugin {
     private static boolean cactusGrowing = false;
     private static boolean pistonEjectBlocks = false;
     private static boolean blockUnicode = true;
+    private static Logger log;
+    private static EngineInterface eng;
 
     @Override
     public void onEnable() {
@@ -28,11 +33,17 @@ public final class Main extends JavaPlugin {
         // Instance
         instance = this;
 
+        log = this.getLogger();
+
         // Listeners
         loadListeners();
 
         // Konfigurace
         loadConfiguration();
+
+        // Console error engine
+        eng = new ConsoleEngine(this);
+        this.getEngine().hideConsoleMessages();
 
     }
 
@@ -46,9 +57,9 @@ public final class Main extends JavaPlugin {
         return instance;
     }
 
-    private void loadConfiguration(){
+    private void loadConfiguration() {
         stackingEnabled = getConfig().getBoolean("hack-minecraft.stacking.enabled", false);
-        if(stackingEnabled){
+        if (stackingEnabled) {
             getConfig().getList("hack-minecraft.stacking.list").forEach(s -> {
                 stackingList.add(Material.getMaterial((String) s));
             });
@@ -63,11 +74,11 @@ public final class Main extends JavaPlugin {
     private void loadListeners() {
         PluginManager manager = Bukkit.getServer().getPluginManager();
 
-        if(isNametagsArmorstand()){
+        if (isNametagsArmorstand()) {
             manager.registerEvents(new PlayerInteractListener(), this);
         }
 
-        if(isStackingEnabled()){
+        if (isStackingEnabled()) {
             manager.registerEvents(new PlayerInventoryClickListener(), this);
         }
 
@@ -102,5 +113,16 @@ public final class Main extends JavaPlugin {
 
     public boolean isBlockUnicode() {
         return blockUnicode;
+    }
+
+    public EngineInterface getEngine() {
+        return eng;
+    }
+
+    public List<String> getStringList(final String key) {
+        if (!getConfig().contains(key)) {
+            return null;
+        }
+        return getConfig().getStringList(key);
     }
 }

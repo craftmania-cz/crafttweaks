@@ -37,3 +37,14 @@ chat:
   # Pokud je na true, tak hraci nebudou moct napsat jine znaky krome 0-9,A-Z
   block-unicode: true
 
+### CONSOLE HIDER ###
+#
+#    hide-message:
+#    - 'WARNING: unlocalizedName'
+#
+# Skryje vsechny zprav v konzoli, ktere obsahuji zadany text.
+
+console:
+  hide-message:
+    - 'Kek: warning'
+
