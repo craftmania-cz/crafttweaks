@@ -43,8 +43,17 @@ chat:
 #    - 'WARNING: unlocalizedName'
 #
 # Skryje vsechny zprav v konzoli, ktere obsahuji zadany text.
-
 console:
   hide-message:
     - 'Kek: warning'
+
+
+# Limity bloků na chunk, podle https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+chunk-limiter:
+  enabled: true
+  blocks:
+    # Nazev musi odpovidat nazvu v MC
+    MINECART: 10 # Limit 10 na chunk
+    CHEST_MINECART: 10
+
 

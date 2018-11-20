@@ -1,7 +1,8 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
+import cz.craftmania.crafttweaks.crafttweaks.listeners.BlockChunkLimitListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerChatListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInteractListener;
+import cz.craftmania.crafttweaks.crafttweaks.listeners.RenameArmorStandWithNameTagListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInventoryClickListener;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
@@ -75,7 +76,7 @@ public final class Main extends JavaPlugin {
         PluginManager manager = Bukkit.getServer().getPluginManager();
 
         if (isNametagsArmorstand()) {
-            manager.registerEvents(new PlayerInteractListener(), this);
+            manager.registerEvents(new RenameArmorStandWithNameTagListener(), this);
         }
 
         if (isStackingEnabled()) {
@@ -85,6 +86,7 @@ public final class Main extends JavaPlugin {
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
 
         manager.registerEvents(new PlayerChatListener(this), this);
+        manager.registerEvents(new BlockChunkLimitListener(), this);
     }
 
     public static boolean isStackingEnabled() {

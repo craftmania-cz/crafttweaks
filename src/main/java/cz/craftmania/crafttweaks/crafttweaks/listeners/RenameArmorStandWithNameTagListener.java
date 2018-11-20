@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class PlayerInteractListener implements Listener {
+public class RenameArmorStandWithNameTagListener implements Listener {
 
     /*
         Oprava klikani s NameTagy na Armorstandy -> bugovani itemu (duplikace)
