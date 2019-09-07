@@ -1,9 +1,7 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
-import cz.craftmania.crafttweaks.crafttweaks.listeners.BlockChunkLimitListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerChatListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.RenameArmorStandWithNameTagListener;
-import cz.craftmania.crafttweaks.crafttweaks.listeners.PlayerInventoryClickListener;
+import cz.craftmania.crafttweaks.crafttweaks.listeners.*;
+import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
 import org.bukkit.Bukkit;
@@ -13,7 +11,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public final class Main extends JavaPlugin {
 
@@ -25,7 +22,8 @@ public final class Main extends JavaPlugin {
     private static boolean cactusGrowing = false;
     private static boolean pistonEjectBlocks = false;
     private static boolean blockUnicode = true;
-    private static Logger log;
+    private static boolean disabledPortals = false;
+    private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
     @Override
@@ -33,7 +31,6 @@ public final class Main extends JavaPlugin {
 
         // Instance
         instance = this;
-
         log = this.getLogger();
 
         // Listeners
@@ -45,7 +42,6 @@ public final class Main extends JavaPlugin {
         // Console error engine
         eng = new ConsoleEngine(this);
         this.getEngine().hideConsoleMessages();
-
     }
 
     @Override
@@ -69,6 +65,7 @@ public final class Main extends JavaPlugin {
         waterBreakingWheat = getConfig().getBoolean("disables-and-fixes.water-breaking-wheat", false);
         cactusGrowing = getConfig().getBoolean("disables-and-fixes.cactus-growing", false);
         pistonEjectBlocks = getConfig().getBoolean("disables-and-fixes.piston-eject-blocks", false);
+        disabledPortals = getConfig().getBoolean("disables-and-fixes.disable-portals", false);
         blockUnicode = getConfig().getBoolean("chat.block-unicode", true);
     }
 
@@ -81,6 +78,11 @@ public final class Main extends JavaPlugin {
 
         if (isStackingEnabled()) {
             manager.registerEvents(new PlayerInventoryClickListener(), this);
+        }
+
+        if (isDisabledPortals()) {
+            Logger.info("Deaktivace portalu na serveru.");
+            manager.registerEvents(new PlayerPortalEventListener(), this);
         }
 
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
@@ -111,6 +113,10 @@ public final class Main extends JavaPlugin {
 
     public static boolean isPistonEjectBlocks() {
         return pistonEjectBlocks;
+    }
+
+    public static boolean isDisabledPortals() {
+        return disabledPortals;
     }
 
     public boolean isBlockUnicode() {

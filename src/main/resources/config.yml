@@ -31,6 +31,9 @@ disables-and-fixes:
   # Kompletni deaktivace Pumpin, Cactus a Meloun farmy (funkcnost)
   piston-eject-blocks: false
 
+  # Deaktivace teleportu přes portály
+  disable-portals: false
+
 # Tweaks pro chat
 chat:
 
