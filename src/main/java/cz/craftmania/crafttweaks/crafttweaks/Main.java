@@ -33,11 +33,11 @@ public final class Main extends JavaPlugin {
         instance = this;
         log = this.getLogger();
 
-        // Listeners
-        loadListeners();
-
         // Konfigurace
         loadConfiguration();
+
+        // Listeners
+        loadListeners();
 
         // Console error engine
         eng = new ConsoleEngine(this);
