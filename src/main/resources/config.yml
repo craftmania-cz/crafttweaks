@@ -34,6 +34,21 @@ disables-and-fixes:
   # Deaktivace teleportu přes portály
   disable-portals: false
 
+  # Deaktivace TNT exploze
+  tnt-explosion: false
+
+  # Deaktivace níčení v určitém světě
+  block-break:
+    enabled: true
+    worlds:
+      - world
+
+  # Deaktivace pokladani bloku v daném světě
+  block-place:
+    enabled: true
+    world:
+      - world
+
 # Tweaks pro chat
 chat:
 
