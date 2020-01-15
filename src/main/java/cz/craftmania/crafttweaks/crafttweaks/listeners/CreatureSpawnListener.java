@@ -11,14 +11,15 @@ import java.util.Random;
 
 public class CreatureSpawnListener implements Listener {
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (e.isCancelled()) {
             return;
         }
 
         if (Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled")) {
-            if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL
+                    || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
                 Entity creature = e.getEntity();
                 int chance = Main.getInstance().getConfig().getInt("entity-spawnrate.default-spawnrate");
                 if (Main.getInstance().getConfig().isSet("entity-spawnrate.entities." + creature.getType().name())) {
