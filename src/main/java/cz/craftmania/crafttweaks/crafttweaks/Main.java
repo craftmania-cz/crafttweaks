@@ -29,6 +29,7 @@ public final class Main extends JavaPlugin {
     private static boolean disabledPortals = false;
     private static boolean disabledBlockBreak = false;
     private static boolean disabledBlockPlace = false;
+    private static boolean enabledSpawnLimiter = false;
     private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
@@ -80,7 +81,7 @@ public final class Main extends JavaPlugin {
         if (disabledBlockPlace) {
             getConfig().getList("disables-and-fixes.block-place.worlds").forEach(world -> disabledBlockPlaceWorlds.add((String) world));
         }
-
+        enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled");
     }
 
     private void loadListeners() {
@@ -111,10 +112,13 @@ public final class Main extends JavaPlugin {
 
         manager.registerEvents(new PlayerChatListener(this), this);
         manager.registerEvents(new BlockChunkLimitListener(), this);
-        manager.registerEvents(new CreatureSpawnListener(), this);
+
+        if (isEnabledSpawnLimiter()) {
+            manager.registerEvents(new CreatureSpawnListener(), this);
+        }
 
         // Limitace entit na 1.15!
-        manager.registerEvents(new CreatureEntitySpawnListener(), this);
+        manager.registerEvents(new CreatureEntityLimiterListener(), this);
     }
 
     public static boolean isStackingEnabled() {
@@ -159,6 +163,10 @@ public final class Main extends JavaPlugin {
 
     public static boolean isDisabledBlockPlace() {
         return disabledBlockPlace;
+    }
+
+    public static boolean isEnabledSpawnLimiter() {
+        return enabledSpawnLimiter;
     }
 
     public boolean isBlockUnicode() {
