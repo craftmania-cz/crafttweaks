@@ -74,4 +74,14 @@ chunk-limiter:
     MINECART: 10 # Limit 10 na chunk
     CHEST_MINECART: 10
 
+# Omezování spawnu entit pomocí procentuální šance
+entity-spawnrate:
+  enabled: false
+  default-spawnrate: 100 # 100% default spawnrate
+  entities:
+    # Nazev musi odpovidat nazvu v MC
+    COW: 100 # 100% spawnrate
+    CREEPER: 0 # Vypnutí spawningu
+    SKELETON: 50 # 50% spawnrate
+
 

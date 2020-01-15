@@ -111,6 +111,7 @@ public final class Main extends JavaPlugin {
 
         manager.registerEvents(new PlayerChatListener(this), this);
         manager.registerEvents(new BlockChunkLimitListener(), this);
+        manager.registerEvents(new CreatureSpawnListener(), this);
 
         // Limitace entit na 1.15!
         manager.registerEvents(new CreatureEntitySpawnListener(), this);
