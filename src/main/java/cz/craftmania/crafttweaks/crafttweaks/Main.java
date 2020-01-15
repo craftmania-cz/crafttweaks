@@ -111,6 +111,9 @@ public final class Main extends JavaPlugin {
 
         manager.registerEvents(new PlayerChatListener(this), this);
         manager.registerEvents(new BlockChunkLimitListener(), this);
+
+        // Limitace entit na 1.15!
+        manager.registerEvents(new CreatureEntitySpawnListener(), this);
     }
 
     public static boolean isStackingEnabled() {
