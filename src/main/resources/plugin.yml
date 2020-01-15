@@ -1,5 +1,6 @@
 name: CraftTweaks
-version: ${project.version}
+version: 1.1.0
 main: cz.craftmania.crafttweaks.crafttweaks.Main
 authors: [MrWakeCZ]
 website: https://craftmania.cz
+api-version: "1.14"
