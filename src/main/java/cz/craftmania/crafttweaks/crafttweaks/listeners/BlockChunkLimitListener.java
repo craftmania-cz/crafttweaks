@@ -45,14 +45,14 @@ public class BlockChunkLimitListener implements Listener {
 
         int count = 0;
         for (Entity chunkEntity : c.getEntities()){
-            if (chunkEntity.getType() == type) {
+            if (chunkEntity.getType() != EntityType.ITEM_FRAME || chunkEntity.getType() != EntityType.PAINTING) {
                 count++;
             }
         }
 
         //System.out.println("Entity in chunks (" + i.getType().name() + ") - " + count);
 
-        if (count > 40) {
+        if (count > 100) {
             e.setCancelled(true);
             p.sendMessage("§cDosahl jsi limitu poctu entit v chunku pro §f" + i.getType().name());
         }

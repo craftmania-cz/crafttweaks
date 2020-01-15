@@ -28,7 +28,7 @@ public class FarmDisasterListener implements Listener {
     public void onPistonFarming(BlockPistonExtendEvent e) {
         for (Block block : e.getBlocks().toArray(new Block[0])) {
             Material type = block.getType();
-            if (type.equals(Material.SUGAR_CANE_BLOCK) || type.equals(Material.PUMPKIN) || type.equals(Material.MELON_BLOCK)) {
+            if (type.equals(Material.SUGAR_CANE) || type.equals(Material.PUMPKIN) || type.equals(Material.MELON)) {
                 e.setCancelled(true);
                 e.getBlock().setType(Material.AIR);
                 return;

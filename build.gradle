@@ -29,9 +29,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly ('org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT') {
+    compileOnly ('org.spigotmc:spigot-api:1.14.2-R0.1-SNAPSHOT') {
         exclude group: 'net.md-5'
     }
-    compileOnly group: 'org.bukkit', name: 'bukkit', version:'1.12.2-R0.1-SNAPSHOT'
+    compileOnly group: 'org.bukkit', name: 'bukkit', version:'1.14.2-R0.1-SNAPSHOT'
     compileOnly group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.11.1'
 }
