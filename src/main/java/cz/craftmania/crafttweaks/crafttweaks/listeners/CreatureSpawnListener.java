@@ -1,5 +1,6 @@
 package cz.craftmania.crafttweaks.crafttweaks.listeners;
 
+import com.destroystokyo.paper.event.entity.PreCreatureSpawnEvent;
 import cz.craftmania.crafttweaks.crafttweaks.Main;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -12,17 +13,16 @@ import java.util.Random;
 public class CreatureSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onCreatureSpawn(CreatureSpawnEvent e) {
+    public void onCreatureSpawn(PreCreatureSpawnEvent e) {
         if (e.isCancelled()) {
             return;
         }
 
-        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL
-                || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-            Entity creature = e.getEntity();
+        if (e.getReason() == CreatureSpawnEvent.SpawnReason.NATURAL
+                || e.getReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
             int chance = Main.getInstance().getConfig().getInt("entity-spawnrate.default-spawnrate");
-            if (Main.getInstance().getConfig().isSet("entity-spawnrate.entities." + creature.getType().name())) {
-                chance = Main.getInstance().getConfig().getInt("entity-spawnrate.entities." + creature.getType().name());
+            if (Main.getInstance().getConfig().isSet("entity-spawnrate.entities." + e.getType().name())) {
+                chance = Main.getInstance().getConfig().getInt("entity-spawnrate.entities." + e.getType().name());
             }
             if (chance >= 100 || chance < 0) {
                 return;
