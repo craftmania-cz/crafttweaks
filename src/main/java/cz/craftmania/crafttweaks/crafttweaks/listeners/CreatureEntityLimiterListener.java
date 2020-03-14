@@ -1,5 +1,6 @@
 package cz.craftmania.crafttweaks.crafttweaks.listeners;
 
+import com.destroystokyo.paper.event.entity.PreCreatureSpawnEvent;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -9,11 +10,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 public class CreatureEntityLimiterListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onCreatureSpawn(final CreatureSpawnEvent event) {
-        Entity entity = event.getEntity();
-        CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+    public void onCreatureSpawn(final PreCreatureSpawnEvent event) {
+        CreatureSpawnEvent.SpawnReason spawnReason = event.getReason();
 
-        if (entity.getWorld().getEntities().size() >= 1500) { // LIMIT 1500 entit?
+        if (event.getSpawnLocation().getWorld().getEntities().size() >= 1500) { // LIMIT 1500 entit?
             if (spawnReason == CreatureSpawnEvent.SpawnReason.DEFAULT
                     || spawnReason == CreatureSpawnEvent.SpawnReason.NATURAL
                     || spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER
