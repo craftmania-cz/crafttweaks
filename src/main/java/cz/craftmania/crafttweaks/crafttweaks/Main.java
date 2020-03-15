@@ -3,6 +3,7 @@ package cz.craftmania.crafttweaks.crafttweaks;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.*;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockBreakListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockPlaceListener;
+import cz.craftmania.crafttweaks.crafttweaks.tasks.LagManager;
 import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
@@ -49,6 +50,9 @@ public final class Main extends JavaPlugin {
         // Console error engine
         eng = new ConsoleEngine(this);
         this.getEngine().hideConsoleMessages();
+
+        // TPS DETECTOR
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LagManager(), 100L, 1L);
     }
 
     @Override
@@ -182,5 +186,9 @@ public final class Main extends JavaPlugin {
             return null;
         }
         return getConfig().getStringList(key);
+    }
+
+    public double getTPS() {
+        return LagManager.getTPS();
     }
 }
