@@ -1,7 +1,7 @@
 package cz.craftmania.crafttweaks.crafttweaks.listeners;
 
+import com.destroystokyo.paper.event.entity.PreCreatureSpawnEvent;
 import cz.craftmania.crafttweaks.crafttweaks.Main;
-import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,9 +14,8 @@ public class CreatureEntityLimiterListener implements Listener {
     private Random randObj = new Random();
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onCreatureSpawn(final CreatureSpawnEvent event) {
-        Entity entity = event.getEntity();
-        CreatureSpawnEvent.SpawnReason spawnReason = event.getSpawnReason();
+    public void onCreatureSpawn(final PreCreatureSpawnEvent event) {
+        CreatureSpawnEvent.SpawnReason spawnReason = event.getReason();
 
 
         if (spawnReason == CreatureSpawnEvent.SpawnReason.DEFAULT
@@ -25,7 +24,7 @@ public class CreatureEntityLimiterListener implements Listener {
                 || spawnReason == CreatureSpawnEvent.SpawnReason.EGG
                 || spawnReason == CreatureSpawnEvent.SpawnReason.NETHER_PORTAL) {
 
-            if (entity.getWorld().getEntities().size() >= 1000) {
+            if (event.getSpawnLocation().getWorld().getEntities().size() >= 1000) {
                 event.setCancelled(true);
             }
 
