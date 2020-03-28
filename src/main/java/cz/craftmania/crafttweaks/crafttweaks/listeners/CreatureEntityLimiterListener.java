@@ -1,7 +1,6 @@
 package cz.craftmania.crafttweaks.crafttweaks.listeners;
 
 import com.destroystokyo.paper.event.entity.PreCreatureSpawnEvent;
-import cz.craftmania.crafttweaks.crafttweaks.Main;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -13,12 +12,12 @@ public class CreatureEntityLimiterListener implements Listener {
 
     private Random randObj = new Random();
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCreatureSpawn(final PreCreatureSpawnEvent event) {
         CreatureSpawnEvent.SpawnReason spawnReason = event.getReason();
 
 
-        if (spawnReason == CreatureSpawnEvent.SpawnReason.DEFAULT
+        /*if (spawnReason == CreatureSpawnEvent.SpawnReason.DEFAULT
                 || spawnReason == CreatureSpawnEvent.SpawnReason.NATURAL
                 || spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER
                 || spawnReason == CreatureSpawnEvent.SpawnReason.EGG
@@ -72,19 +71,15 @@ public class CreatureEntityLimiterListener implements Listener {
             } else {
                 event.setCancelled(true);
             }
-        }
+        }*/
 
-        /*if (entity.getWorld().getEntities().size() >= 1000) { // LIMIT 1500 entit?
+        if (event.getSpawnLocation().getWorld().getEntityCount() >= 1200) { // LIMIT 1500 entit?
             if (spawnReason == CreatureSpawnEvent.SpawnReason.DEFAULT
                     || spawnReason == CreatureSpawnEvent.SpawnReason.NATURAL
                     || spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER
-                    || spawnReason == CreatureSpawnEvent.SpawnReason.EGG
                     || spawnReason == CreatureSpawnEvent.SpawnReason.NETHER_PORTAL) {
-
-
-
                 event.setCancelled(true);
             }
-        }*/
+        }
     }
 }

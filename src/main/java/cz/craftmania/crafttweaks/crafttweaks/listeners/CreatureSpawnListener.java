@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class CreatureSpawnListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCreatureSpawn(PreCreatureSpawnEvent e) {
         if (e.isCancelled()) {
             return;

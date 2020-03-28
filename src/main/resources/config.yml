@@ -84,4 +84,11 @@ entity-spawnrate:
     CREEPER: 0 # Vypnutí spawningu
     SKELETON: 50 # 50% spawnrate
 
+# Omezování celkovího počtu spawnu entit na serveru
+# **Může způsobovat větší lagy kvůli
+entity-limiter:
+  enabled: false
+  max-entities: 1200 # Maximální počet entit na serveru
+  use-tps: false # Zda se má spawn-rate kontrolovat dle TPS
+
 
