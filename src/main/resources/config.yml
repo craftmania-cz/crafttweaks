@@ -91,4 +91,9 @@ entity-limiter:
   max-entities: 1200 # Maximální počet entit na serveru
   use-tps: false # Zda se má spawn-rate kontrolovat dle TPS
 
+# Příkazy, které se spustí po startu serveru
+after-start:
+  commands:
+    - say Server has sucessfully started!
+
 

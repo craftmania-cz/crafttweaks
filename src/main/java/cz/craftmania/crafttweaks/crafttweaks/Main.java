@@ -6,6 +6,7 @@ import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockPlac
 import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
@@ -13,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class Main extends JavaPlugin {
 
@@ -49,6 +51,14 @@ public final class Main extends JavaPlugin {
         // Console error engine
         eng = new ConsoleEngine(this);
         this.getEngine().hideConsoleMessages();
+
+        // Commands after start
+        if (Objects.requireNonNull(getConfig().getList("after-start.commands")).size() > 0) {
+            Bukkit.getScheduler().runTaskLater(this, () -> getConfig().getList("after-start.commands").forEach(command -> {
+                Logger.info("Run: " + command);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), (String) command);
+            }), 100L);
+        }
     }
 
     @Override
