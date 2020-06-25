@@ -91,7 +91,7 @@ public final class Main extends JavaPlugin {
         if (disabledBlockPlace) {
             getConfig().getList("disables-and-fixes.block-place.worlds").forEach(world -> disabledBlockPlaceWorlds.add((String) world));
         }
-        enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled");
+        enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled", false);
     }
 
     private void loadListeners() {
