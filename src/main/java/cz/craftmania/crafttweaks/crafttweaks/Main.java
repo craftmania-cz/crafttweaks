@@ -121,7 +121,6 @@ public final class Main extends JavaPlugin {
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
 
         manager.registerEvents(new PlayerChatListener(this), this);
-        manager.registerEvents(new BlockChunkLimitListener(), this);
 
         if (isEnabledSpawnLimiter()) {
             manager.registerEvents(new CreatureSpawnListener(), this);
