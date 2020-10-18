@@ -22,15 +22,6 @@ disables-and-fixes:
   # Deaktivace pouzivani nametagu na ArmorStandy
   nametag-on-armorstand: false
 
-  # Deaktivace vody, ktera nici wheat v farmach
-  water-breaking-wheat: false
-
-  # Deaktivace rustu a fyziky kaktusu
-  cactus-growing: false
-
-  # Kompletni deaktivace Pumpin, Cactus a Meloun farmy (funkcnost)
-  piston-eject-blocks: false
-
   # Deaktivace teleportu přes portály
   disable-portals: false
 
@@ -48,12 +39,6 @@ disables-and-fixes:
     enabled: true
     world:
       - world
-
-# Tweaks pro chat
-chat:
-
-  # Pokud je na true, tak hraci nebudou moct napsat jine znaky krome 0-9,A-Z
-  block-unicode: true
 
 ### CONSOLE HIDER ###
 #
@@ -85,7 +70,7 @@ entity-spawnrate:
     SKELETON: 50 # 50% spawnrate
 
 # Omezování celkovího počtu spawnu entit na serveru
-# **Může způsobovat větší lagy kvůli
+# **Může způsobovat větší lagy kvůli výpočtům.**
 entity-limiter:
   enabled: false
   max-entities: 1200 # Maximální počet entit na serveru

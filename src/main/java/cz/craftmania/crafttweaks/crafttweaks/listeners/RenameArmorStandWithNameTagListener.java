@@ -21,17 +21,9 @@ public class RenameArmorStandWithNameTagListener implements Listener {
         final Entity entity = e.getRightClicked();
         final ItemStack item = e.getPlayer().getInventory().getItemInMainHand();
 
-        if(entity == null){
-            return;
-        }
-
-        if(item == null){
-            return;
-        }
-
         if(entity instanceof ArmorStand){
             if(item.getType() == Material.NAME_TAG){
-                p.sendMessage("§c§l(!) §cTato akce je blokovana!");
+                p.sendMessage("§c§l(!) §cNemůžeš provádět tuto akci!");
                 e.setCancelled(true);
             }
         }

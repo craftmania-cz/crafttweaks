@@ -24,14 +24,11 @@ public final class Main extends JavaPlugin {
     private static List<String> disabledBlockBreakWorlds = new ArrayList<>();
     private static List<String> disabledBlockPlaceWorlds = new ArrayList<>();
     private static boolean nametagsArmorstand = false;
-    private static boolean waterBreakingWheat = false;
-    private static boolean cactusGrowing = false;
-    private static boolean pistonEjectBlocks = false;
-    private static boolean blockUnicode = true;
     private static boolean disabledPortals = false;
     private static boolean disabledBlockBreak = false;
     private static boolean disabledBlockPlace = false;
     private static boolean enabledSpawnLimiter = false;
+    private static boolean entityLimiter = false;
     private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
@@ -78,11 +75,7 @@ public final class Main extends JavaPlugin {
             getConfig().getList("hack-minecraft.stacking.list").forEach(s -> stackingList.add(Material.getMaterial((String) s)));
         }
         nametagsArmorstand = getConfig().getBoolean("disables-and-fixes.nametag-on-armorstand", false);
-        waterBreakingWheat = getConfig().getBoolean("disables-and-fixes.water-breaking-wheat", false);
-        cactusGrowing = getConfig().getBoolean("disables-and-fixes.cactus-growing", false);
-        pistonEjectBlocks = getConfig().getBoolean("disables-and-fixes.piston-eject-blocks", false);
         disabledPortals = getConfig().getBoolean("disables-and-fixes.disable-portals", false);
-        blockUnicode = getConfig().getBoolean("chat.block-unicode", true);
         disabledBlockBreak = getConfig().getBoolean("disables-and-fixes.block-break.enabled", false);
         if (disabledBlockBreak) {
             getConfig().getList("disables-and-fixes.block-break.worlds").forEach(world -> disabledBlockBreakWorlds.add((String) world));
@@ -92,6 +85,7 @@ public final class Main extends JavaPlugin {
             getConfig().getList("disables-and-fixes.block-place.worlds").forEach(world -> disabledBlockPlaceWorlds.add((String) world));
         }
         enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled", false);
+        entityLimiter = Main.getInstance().getConfig().getBoolean("entity-limiter.enabled", false);
     }
 
     private void loadListeners() {
@@ -120,14 +114,13 @@ public final class Main extends JavaPlugin {
 
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
 
-        manager.registerEvents(new PlayerChatListener(this), this);
-
         if (isEnabledSpawnLimiter()) {
             manager.registerEvents(new CreatureSpawnListener(), this);
         }
 
-        // Limitace entit na 1.15!
-        //manager.registerEvents(new CreatureEntityLimiterListener(), this);
+        if (isEntityLimiterEnabled()) {
+            manager.registerEvents(new CreatureEntityLimiterListener(), this);
+        }
     }
 
     public static boolean isStackingEnabled() {
@@ -140,18 +133,6 @@ public final class Main extends JavaPlugin {
 
     public static boolean isNametagsArmorstand() {
         return nametagsArmorstand;
-    }
-
-    public static boolean isWaterBreakingWheat() {
-        return waterBreakingWheat;
-    }
-
-    public static boolean isCactusGrowing() {
-        return cactusGrowing;
-    }
-
-    public static boolean isPistonEjectBlocks() {
-        return pistonEjectBlocks;
     }
 
     public static boolean isDisabledPortals() {
@@ -178,8 +159,8 @@ public final class Main extends JavaPlugin {
         return enabledSpawnLimiter;
     }
 
-    public boolean isBlockUnicode() {
-        return blockUnicode;
+    public static boolean isEntityLimiterEnabled() {
+        return entityLimiter;
     }
 
     public EngineInterface getEngine() {
