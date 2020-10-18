@@ -28,6 +28,9 @@ disables-and-fixes:
   # Deaktivace TNT exploze
   tnt-explosion: false
 
+  # Deaktivace gravitace na armorstandu, aby nešel posunovat pomocí vody
+  armorstand-gravity: false
+
   # Deaktivace níčení v určitém světě
   block-break:
     enabled: true

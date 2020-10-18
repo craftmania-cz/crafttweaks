@@ -29,6 +29,7 @@ public final class Main extends JavaPlugin {
     private static boolean disabledBlockPlace = false;
     private static boolean enabledSpawnLimiter = false;
     private static boolean entityLimiter = false;
+    private static boolean disabledArmorStandGravity = false;
     private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
@@ -86,6 +87,7 @@ public final class Main extends JavaPlugin {
         }
         enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled", false);
         entityLimiter = Main.getInstance().getConfig().getBoolean("entity-limiter.enabled", false);
+        disabledArmorStandGravity = Main.getInstance().getConfig().getBoolean("disables-and-fixes.armorstand-gravity", false);
     }
 
     private void loadListeners() {
@@ -128,6 +130,11 @@ public final class Main extends JavaPlugin {
             Logger.info("Hodnota je nastavena na: " + getConfig().getInt("entity-limiter.max-entities"));
             manager.registerEvents(new CreatureEntityLimiterListener(), this);
         }
+
+        if (isDisabledArmorStandGravity()) {
+            Logger.info("Deaktivace gravitace na polozene armorstandy.");
+            manager.registerEvents(new ArmorStandGravityDisabler(), this);
+        }
     }
 
     public static boolean isStackingEnabled() {
@@ -164,6 +171,10 @@ public final class Main extends JavaPlugin {
 
     public static boolean isEnabledSpawnLimiter() {
         return enabledSpawnLimiter;
+    }
+
+    public static boolean isDisabledArmorStandGravity() {
+        return disabledArmorStandGravity;
     }
 
     public static boolean isEntityLimiterEnabled() {
