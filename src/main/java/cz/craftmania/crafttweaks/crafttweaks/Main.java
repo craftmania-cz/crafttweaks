@@ -92,10 +92,12 @@ public final class Main extends JavaPlugin {
         PluginManager manager = Bukkit.getServer().getPluginManager();
 
         if (isNametagsArmorstand()) {
+            Logger.info("Deaktivace prejmenovani armorstandu.");
             manager.registerEvents(new RenameArmorStandWithNameTagListener(), this);
         }
 
         if (isStackingEnabled()) {
+            Logger.info("Aktivace stakovani nestakovatelnych itemi.");
             manager.registerEvents(new PlayerInventoryClickListener(), this);
         }
 
@@ -105,20 +107,25 @@ public final class Main extends JavaPlugin {
         }
 
         if (isDisabledBlockBreak()) {
+            Logger.info("Deaktivace niceni bloku v vybranch svetech.");
             manager.registerEvents(new DisableBlockBreakListener(), this);
         }
 
         if (isDisabledBlockPlace()) {
+            Logger.info("Deaktivace pokladani bloku v vybranch svetech.");
             manager.registerEvents(new DisableBlockPlaceListener(), this);
         }
 
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
 
         if (isEnabledSpawnLimiter()) {
+            Logger.info("Aktivace limitovani spawn-ratu entit.");
             manager.registerEvents(new CreatureSpawnListener(), this);
         }
 
         if (isEntityLimiterEnabled()) {
+            Logger.info("Aktivace limitovani celkoveho spawnu entit.");
+            Logger.info("Hodnota je nastavena na: " + getConfig().getInt("entity-limiter.max-entities"));
             manager.registerEvents(new CreatureEntityLimiterListener(), this);
         }
     }
