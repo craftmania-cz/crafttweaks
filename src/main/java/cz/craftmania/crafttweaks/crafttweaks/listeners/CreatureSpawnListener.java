@@ -14,10 +14,6 @@ public class CreatureSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onCreatureSpawn(PreCreatureSpawnEvent e) {
-        if (e.isCancelled()) {
-            return;
-        }
-
         if (e.getReason() == CreatureSpawnEvent.SpawnReason.NATURAL
                 || e.getReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
             int chance = Main.getInstance().getConfig().getInt("entity-spawnrate.default-spawnrate");
