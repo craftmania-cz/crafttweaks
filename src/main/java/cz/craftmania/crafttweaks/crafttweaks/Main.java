@@ -18,8 +18,6 @@ import java.util.Objects;
 public final class Main extends JavaPlugin {
 
     private static Main instance;
-    private static boolean stackingEnabled = false;
-    private static List<Material> stackingList = new ArrayList<>();
     private static List<String> disabledBlockBreakWorlds = new ArrayList<>();
     private static List<String> disabledBlockPlaceWorlds = new ArrayList<>();
     private static boolean nametagsArmorstand = false;
@@ -70,10 +68,6 @@ public final class Main extends JavaPlugin {
 
     private void loadConfiguration() {
         //TODO: Jako server objekt, jelikož toho bude časem víc
-        stackingEnabled = getConfig().getBoolean("hack-minecraft.stacking.enabled", false);
-        if (stackingEnabled) {
-            getConfig().getList("hack-minecraft.stacking.list").forEach(s -> stackingList.add(Material.getMaterial((String) s)));
-        }
         nametagsArmorstand = getConfig().getBoolean("disables-and-fixes.nametag-on-armorstand", false);
         disabledPortals = getConfig().getBoolean("disables-and-fixes.disable-portals", false);
         disabledBlockBreak = getConfig().getBoolean("disables-and-fixes.block-break.enabled", false);
@@ -95,11 +89,6 @@ public final class Main extends JavaPlugin {
         if (isNametagsArmorstand()) {
             Logger.info("Deaktivace prejmenovani armorstandu.");
             manager.registerEvents(new RenameArmorStandWithNameTagListener(), this);
-        }
-
-        if (isStackingEnabled()) {
-            Logger.info("Aktivace stakovani nestakovatelnych itemi.");
-            manager.registerEvents(new PlayerInventoryClickListener(), this);
         }
 
         if (isDisabledPortals()) {
@@ -134,14 +123,6 @@ public final class Main extends JavaPlugin {
             Logger.info("Deaktivace gravitace na polozene armorstandy.");
             manager.registerEvents(new ArmorStandGravityDisabler(), this);
         }
-    }
-
-    public static boolean isStackingEnabled() {
-        return stackingEnabled;
-    }
-
-    public static List<Material> getStackingList() {
-        return stackingList;
     }
 
     public static boolean isNametagsArmorstand() {

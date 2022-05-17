@@ -5,17 +5,6 @@
 #  \____|_|  \__,_|_|  \__||_|   \_/\_/ \___|\__,_|_|\_\___/
 #
 
-
-# Pokrocile upravy Minecraftu
-hack-minecraft:
-
-  # Povoleni extra stakovani itemu, ktere normalne nejsou stakovat! Pozor: Muze bugovat!
-  stacking:
-    enabled: false # Pokud je na true, seznam dole pujde stakovat
-    list:
-      - 'WATER_BUCKET'
-      - 'LAVA_BUCKET'
-
 # Upravy chovani serveru (pokud je true) ochrana je aktivni
 disables-and-fixes:
 
