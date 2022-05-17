@@ -18,6 +18,7 @@ import java.util.Objects;
 public final class Main extends JavaPlugin {
 
     private static Main instance;
+    private boolean debug;
     private static List<String> disabledBlockBreakWorlds = new ArrayList<>();
     private static List<String> disabledBlockPlaceWorlds = new ArrayList<>();
     private static boolean nametagsArmorstand = false;
@@ -68,6 +69,7 @@ public final class Main extends JavaPlugin {
 
     private void loadConfiguration() {
         //TODO: Jako server objekt, jelikož toho bude časem víc
+        debug = getConfig().getBoolean("general.debug");
         nametagsArmorstand = getConfig().getBoolean("disables-and-fixes.nametag-on-armorstand", false);
         disabledPortals = getConfig().getBoolean("disables-and-fixes.disable-portals", false);
         disabledBlockBreak = getConfig().getBoolean("disables-and-fixes.block-break.enabled", false);
@@ -123,6 +125,10 @@ public final class Main extends JavaPlugin {
             Logger.info("Deaktivace gravitace na polozene armorstandy.");
             manager.registerEvents(new ArmorStandGravityDisabler(), this);
         }
+    }
+
+    public boolean isDebugEnabled() {
+        return debug;
     }
 
     public static boolean isNametagsArmorstand() {

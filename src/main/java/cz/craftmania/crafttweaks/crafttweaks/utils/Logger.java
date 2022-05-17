@@ -16,4 +16,8 @@ public class Logger {
     public static void success(String s) {
         Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[CraftTweaks] " + ChatColor.GREEN + s);
     }
+
+    public static void debug(String s) {
+        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "[CraftTweaks] " + ChatColor.WHITE + s);
+    }
 }
