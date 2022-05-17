@@ -17,7 +17,6 @@ public class CreatureSpawnListener implements Listener {
     public void onCreatureSpawn(PreCreatureSpawnEvent e) {
         if (e.getReason() == CreatureSpawnEvent.SpawnReason.NATURAL
                 || e.getReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-            Logger.debug("[PreCreatureSpawnEvent]: Entity: " + e.getType());
             int chance = Main.getInstance().getConfig().getInt("entity-spawnrate.default-spawnrate");
             if (Main.getInstance().getConfig().isSet("entity-spawnrate.entities." + e.getType().name())) {
                 chance = Main.getInstance().getConfig().getInt("entity-spawnrate.entities." + e.getType().name());
