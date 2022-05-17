@@ -22,13 +22,13 @@ disables-and-fixes:
 
   # Deaktivace níčení v určitém světě
   block-break:
-    enabled: true
+    enabled: false
     worlds:
       - world
 
   # Deaktivace pokladani bloku v daném světě
   block-place:
-    enabled: true
+    enabled: false
     world:
       - world
 
@@ -45,7 +45,7 @@ console:
 
 # Limity bloků na chunk, podle https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
 chunk-limiter:
-  enabled: true
+  enabled: false
   entities:
     # Nazev musi odpovidat nazvu v MC
     MINECART: 10 # Limit 10 na chunk
