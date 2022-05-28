@@ -1,5 +1,6 @@
 package cz.craftmania.crafttweaks.crafttweaks.utils;
 
+import cz.craftmania.crafttweaks.crafttweaks.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -18,6 +19,7 @@ public class Logger {
     }
 
     public static void debug(String s) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "[CraftTweaks] " + ChatColor.WHITE + s);
+        if (Main.getInstance().isDebugEnabled())
+            Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "[CraftTweaks] " + ChatColor.WHITE + s);
     }
 }
