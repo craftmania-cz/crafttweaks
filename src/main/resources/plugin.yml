@@ -4,3 +4,5 @@ main: cz.craftmania.crafttweaks.crafttweaks.Main
 authors: [MrWakeCZ]
 website: https://craftmania.cz
 api-version: "1.18"
+softdepend:
+  - ProtocolLib

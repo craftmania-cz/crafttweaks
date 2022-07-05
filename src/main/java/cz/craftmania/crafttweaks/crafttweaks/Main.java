@@ -28,6 +28,7 @@ public final class Main extends JavaPlugin {
     private static boolean enabledSpawnLimiter = false;
     private static boolean entityLimiter = false;
     private static boolean disabledArmorStandGravity = false;
+    private static boolean enabledUnlimitedAnvilCost = false;
     private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
@@ -59,7 +60,6 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
         instance = null;
     }
 
@@ -83,60 +83,63 @@ public final class Main extends JavaPlugin {
         enabledSpawnLimiter = Main.getInstance().getConfig().getBoolean("entity-spawnrate.enabled", false);
         entityLimiter = Main.getInstance().getConfig().getBoolean("entity-limiter.enabled", false);
         disabledArmorStandGravity = Main.getInstance().getConfig().getBoolean("disables-and-fixes.armorstand-gravity", false);
+        enabledUnlimitedAnvilCost = Main.getInstance().getConfig().getBoolean("disables-and-fixes.anvil-unlimited-repair.enabled", false);
     }
 
     private void loadListeners() {
         PluginManager manager = Bukkit.getServer().getPluginManager();
 
-        if (isNametagsArmorstand()) {
+        if (nametagsArmorstand) {
             Logger.info("Deaktivace prejmenovani armorstandu.");
             manager.registerEvents(new RenameArmorStandWithNameTagListener(), this);
         }
 
-        if (isDisabledPortals()) {
+        if (disabledPortals) {
             Logger.info("Deaktivace portalu na serveru.");
             manager.registerEvents(new PlayerPortalEventListener(), this);
         }
 
-        if (isDisabledBlockBreak()) {
+        if (disabledBlockBreak) {
             Logger.info("Deaktivace niceni bloku v vybranch svetech.");
             manager.registerEvents(new DisableBlockBreakListener(), this);
         }
 
-        if (isDisabledBlockPlace()) {
+        if (disabledBlockPlace) {
             Logger.info("Deaktivace pokladani bloku v vybranch svetech.");
             manager.registerEvents(new DisableBlockPlaceListener(), this);
         }
 
         //Bukkit.getServer().getPluginManager().registerEvents(new FarmDisasterListener(), this);
 
-        if (isEnabledSpawnLimiter()) {
+        if (enabledSpawnLimiter) {
             Logger.info("Aktivace limitovani spawn-ratu entit.");
             manager.registerEvents(new CreatureSpawnListener(), this);
         }
 
-        if (isEntityLimiterEnabled()) {
+        if (entityLimiter) {
             Logger.info("Aktivace limitovani celkoveho spawnu entit.");
             Logger.info("Hodnota je nastavena na: " + getConfig().getInt("entity-limiter.max-entities"));
             manager.registerEvents(new CreatureEntityLimiterListener(), this);
         }
 
-        if (isDisabledArmorStandGravity()) {
+        if (disabledArmorStandGravity) {
             Logger.info("Deaktivace gravitace na polozene armorstandy.");
             manager.registerEvents(new ArmorStandGravityDisabler(), this);
+        }
+
+        if (enabledUnlimitedAnvilCost) {
+            Logger.info("Aktivace upravy limitu opravy v kovalidně.");
+            Logger.info("Limit je nastavený na: " + getConfig().getInt("disables-and-fixes.anvil-unlimited-repair.maxCost"));
+            if (!manager.isPluginEnabled("ProtocolLib")) {
+                Logger.danger("ProtocolLib není aktivní, úprava limitu nebyla aktivována.");
+                return;
+            }
+            manager.registerEvents(new AnvilUnlimitedRepairFix(), this);
         }
     }
 
     public boolean isDebugEnabled() {
         return debug;
-    }
-
-    public static boolean isNametagsArmorstand() {
-        return nametagsArmorstand;
-    }
-
-    public static boolean isDisabledPortals() {
-        return disabledPortals;
     }
 
     public static List<String> getDisabledBlockBreakWorlds() {
@@ -145,26 +148,6 @@ public final class Main extends JavaPlugin {
 
     public static List<String> getDisabledBlockPlaceWorlds() {
         return disabledBlockPlaceWorlds;
-    }
-
-    public static boolean isDisabledBlockBreak() {
-        return disabledBlockBreak;
-    }
-
-    public static boolean isDisabledBlockPlace() {
-        return disabledBlockPlace;
-    }
-
-    public static boolean isEnabledSpawnLimiter() {
-        return enabledSpawnLimiter;
-    }
-
-    public static boolean isDisabledArmorStandGravity() {
-        return disabledArmorStandGravity;
-    }
-
-    public static boolean isEntityLimiterEnabled() {
-        return entityLimiter;
     }
 
     public EngineInterface getEngine() {

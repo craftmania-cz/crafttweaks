@@ -36,6 +36,12 @@ disables-and-fixes:
     world:
       - world
 
+  # Povolením se odemkne client fix na to, aby šly větší enchanty
+  # jak lvl 40. Jelikož od 39 client označuje opravu jako "Too Expensive"
+  anvil-unlimited-repair:
+    enabled: false
+    maxCost: 200
+
 ### CONSOLE HIDER ###
 #
 #    hide-message:
