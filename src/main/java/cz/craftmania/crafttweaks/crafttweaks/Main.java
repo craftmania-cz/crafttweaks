@@ -1,11 +1,13 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
+import com.github.retrooper.packetevents.PacketEvents;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.*;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockBreakListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockPlaceListener;
 import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
+import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
@@ -29,15 +31,25 @@ public final class Main extends JavaPlugin {
     private static boolean entityLimiter = false;
     private static boolean disabledArmorStandGravity = false;
     private static boolean enabledUnlimitedAnvilCost = false;
+    private static boolean fakeEncryptionChat = false;
     private static java.util.logging.Logger log;
     private static EngineInterface eng;
 
     @Override
-    public void onEnable() {
+    public void onLoad() {
 
         // Instance
         instance = this;
         log = this.getLogger();
+
+        // Packet Events Preload
+        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
+        PacketEvents.getAPI().getSettings().debug(false).bStats(false).checkForUpdates(false);
+        PacketEvents.getAPI().load();
+    }
+
+    @Override
+    public void onEnable() {
 
         // Konfigurace
         loadConfiguration();
@@ -60,6 +72,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        PacketEvents.getAPI().terminate();
         instance = null;
     }
 
@@ -84,6 +97,7 @@ public final class Main extends JavaPlugin {
         entityLimiter = Main.getInstance().getConfig().getBoolean("entity-limiter.enabled", false);
         disabledArmorStandGravity = Main.getInstance().getConfig().getBoolean("disables-and-fixes.armorstand-gravity", false);
         enabledUnlimitedAnvilCost = Main.getInstance().getConfig().getBoolean("disables-and-fixes.anvil-unlimited-repair.enabled", false);
+        fakeEncryptionChat = Main.getInstance().getConfig().getBoolean("disables-and-fixes.chat-encryption.enabled", true);
     }
 
     private void loadListeners() {
@@ -135,6 +149,12 @@ public final class Main extends JavaPlugin {
                 return;
             }
             manager.registerEvents(new AnvilUnlimitedRepairFix(), this);
+        }
+
+        if (fakeEncryptionChat) {
+            Logger.info("Aktivace fake encryptování chatu a blokace Mojang reportů.");
+            PacketEvents.getAPI().getEventManager().registerListener(new ChatEncryptionListener());
+            PacketEvents.getAPI().init();
         }
     }
 
