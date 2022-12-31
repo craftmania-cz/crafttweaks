@@ -22,7 +22,7 @@ public class LogFilter implements Filter {
         if (!plugin.getStringList("console.hide-message").isEmpty()) {
             for (final String s : Objects.requireNonNull(plugin.getStringList("console.hide-message"))) {
                 if (message.contains(s)) {
-                    this.plugin.getEngine().addHiddenMsg();
+                    this.plugin.getEng().addHiddenMsg();
                     return Filter.Result.DENY;
                 }
             }

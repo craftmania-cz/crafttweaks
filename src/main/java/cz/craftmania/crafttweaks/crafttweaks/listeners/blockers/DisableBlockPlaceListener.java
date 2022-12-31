@@ -13,7 +13,7 @@ public class DisableBlockPlaceListener implements Listener {
     public void onBlockPlace(final BlockPlaceEvent event) {
         World bukkitWorld = event.getPlayer().getWorld();
         Player player = event.getPlayer();
-        Main.getDisabledBlockPlaceWorlds().forEach(world -> {
+        Main.getInstance().getDisabledBlockPlaceWorlds().forEach(world -> {
             if (world.equalsIgnoreCase(bukkitWorld.getName())) {
                 player.sendMessage("§c§l[!] §cV tomto světě je zákázáno pokládat bloky!");
                 event.setCancelled(true);

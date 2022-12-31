@@ -13,7 +13,7 @@ public class DisableBlockBreakListener implements Listener {
     public void onBreakBlock(final BlockBreakEvent event) {
         World bukkitWorld = event.getPlayer().getWorld();
         Player player = event.getPlayer();
-        Main.getDisabledBlockBreakWorlds().forEach(world -> {
+        Main.getInstance().getDisabledBlockBreakWorlds().forEach(world -> {
             if (world.equalsIgnoreCase(bukkitWorld.getName())) {
                 player.sendMessage("§c§l[!] §cV tomto světě je zákázáno níčit bloky!");
                 event.setCancelled(true);

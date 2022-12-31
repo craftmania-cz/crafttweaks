@@ -8,6 +8,7 @@ import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
@@ -20,20 +21,22 @@ import java.util.Objects;
 public final class Main extends JavaPlugin {
 
     private static Main instance;
-    private boolean debug;
-    private static List<String> disabledBlockBreakWorlds = new ArrayList<>();
-    private static List<String> disabledBlockPlaceWorlds = new ArrayList<>();
-    private static boolean nametagsArmorstand = false;
-    private static boolean disabledPortals = false;
-    private static boolean disabledBlockBreak = false;
-    private static boolean disabledBlockPlace = false;
-    private static boolean enabledSpawnLimiter = false;
-    private static boolean entityLimiter = false;
-    private static boolean disabledArmorStandGravity = false;
-    private static boolean enabledUnlimitedAnvilCost = false;
-    private static boolean fakeEncryptionChat = false;
-    private static java.util.logging.Logger log;
-    private static EngineInterface eng;
+    private @Getter boolean debug;
+    private @Getter List<String> disabledBlockBreakWorlds = new ArrayList<>();
+    private @Getter List<String> disabledBlockPlaceWorlds = new ArrayList<>();
+    private @Getter List<String> villagerTradeMaterialList = new ArrayList<>();
+    private @Getter boolean nametagsArmorstand = false;
+    private @Getter boolean disabledPortals = false;
+    private @Getter boolean disabledBlockBreak = false;
+    private @Getter boolean disabledBlockPlace = false;
+    private @Getter boolean enabledSpawnLimiter = false;
+    private @Getter boolean entityLimiter = false;
+    private @Getter boolean disabledArmorStandGravity = false;
+    private @Getter boolean enabledUnlimitedAnvilCost = false;
+    private @Getter boolean fakeEncryptionChat = false;
+    private @Getter boolean villagerTradeMaterialRemoverEnabled = false;
+    private @Getter java.util.logging.Logger log;
+    private @Getter EngineInterface eng;
 
     @Override
     public void onLoad() {
@@ -59,7 +62,7 @@ public final class Main extends JavaPlugin {
 
         // Console error engine
         eng = new ConsoleEngine(this);
-        this.getEngine().hideConsoleMessages();
+        this.getEng().hideConsoleMessages();
 
         // Commands after start
         if (Objects.requireNonNull(getConfig().getList("after-start.commands")).size() > 0) {
@@ -156,22 +159,12 @@ public final class Main extends JavaPlugin {
             PacketEvents.getAPI().getEventManager().registerListener(new ChatEncryptionListener());
             PacketEvents.getAPI().init();
         }
-    }
 
-    public boolean isDebugEnabled() {
-        return debug;
-    }
-
-    public static List<String> getDisabledBlockBreakWorlds() {
-        return disabledBlockBreakWorlds;
-    }
-
-    public static List<String> getDisabledBlockPlaceWorlds() {
-        return disabledBlockPlaceWorlds;
-    }
-
-    public EngineInterface getEngine() {
-        return eng;
+        if (villagerTradeMaterialRemoverEnabled) {
+            Logger.info("Aktivace mazání itemů z inventáře villagerů.");
+            Logger.info("Seznam itemů: " + this.villagerTradeMaterialList);
+            manager.registerEvents(new VillagerTradeRemoveItemListener(), this);
+        }
     }
 
     public List<String> getStringList(final String key) {

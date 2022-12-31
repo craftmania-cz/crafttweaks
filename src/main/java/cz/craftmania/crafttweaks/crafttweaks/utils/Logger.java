@@ -19,7 +19,7 @@ public class Logger {
     }
 
     public static void debug(String s) {
-        if (Main.getInstance().isDebugEnabled())
+        if (Main.getInstance().isDebug())
             Bukkit.getConsoleSender().sendMessage(ChatColor.BLUE + "[CraftTweaks] " + ChatColor.WHITE + s);
     }
 }
