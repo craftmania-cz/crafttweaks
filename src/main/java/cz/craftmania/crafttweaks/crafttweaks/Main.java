@@ -101,6 +101,10 @@ public final class Main extends JavaPlugin {
         disabledArmorStandGravity = Main.getInstance().getConfig().getBoolean("disables-and-fixes.armorstand-gravity", false);
         enabledUnlimitedAnvilCost = Main.getInstance().getConfig().getBoolean("disables-and-fixes.anvil-unlimited-repair.enabled", false);
         fakeEncryptionChat = Main.getInstance().getConfig().getBoolean("disables-and-fixes.chat-encryption.enabled", true);
+        villagerTradeMaterialRemoverEnabled = Main.getInstance().getConfig().getBoolean("villager-trade-remover.enabled", false);
+        if (villagerTradeMaterialRemoverEnabled) {
+            getConfig().getList("villager-trade-remover.items").forEach(item -> villagerTradeMaterialList.add((String) item));
+        }
     }
 
     private void loadListeners() {

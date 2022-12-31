@@ -88,4 +88,11 @@ after-start:
   commands:
     - say Server has sucessfully started!
 
+# Pokud je aktivní odebere daný item z "inventáře" vesničana, tak
+# aby si jej hráč nemohl nikdy koupit.
+villager-trade-remover:
+  enabled: false
+  items:
+    - BEDROCK
+
 
