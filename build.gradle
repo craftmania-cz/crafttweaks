@@ -31,10 +31,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT'
+    compileOnly 'io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT'
     compileOnly group: 'org.apache.logging.log4j', name: 'log4j-core', version:'2.17.2'
     compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.8.0"
-    implementation 'com.github.retrooper.packetevents:spigot:2.0.0-SNAPSHOT'
+    implementation 'com.github.retrooper.packetevents:spigot:2.0.0-20230309.211503-148'
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
