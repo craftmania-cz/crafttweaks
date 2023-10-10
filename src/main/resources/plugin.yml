@@ -1,8 +1,8 @@
 name: CraftTweaks
-version: 1.4.1
+version: 1.4.2
 main: cz.craftmania.crafttweaks.crafttweaks.Main
 authors: [MrWakeCZ]
 website: https://craftmania.cz
-api-version: "1.19"
+api-version: "1.20"
 softdepend:
   - ProtocolLib
