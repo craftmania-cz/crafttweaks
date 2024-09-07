@@ -42,11 +42,6 @@ disables-and-fixes:
     enabled: false
     maxCost: 200
 
-  # Skryje oznámení o tom, že server není encryptovaný v rámci chatu
-  # Znemožní hráčům také zasílat reporty Mojangu.
-  chat-encryption:
-    enabled: true
-
 ### CONSOLE HIDER ###
 #
 #    hide-message:

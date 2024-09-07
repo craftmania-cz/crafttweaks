@@ -1,13 +1,11 @@
 package cz.craftmania.crafttweaks.crafttweaks;
 
-import com.github.retrooper.packetevents.PacketEvents;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.*;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockBreakListener;
 import cz.craftmania.crafttweaks.crafttweaks.listeners.blockers.DisableBlockPlaceListener;
 import cz.craftmania.crafttweaks.crafttweaks.utils.Logger;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.ConsoleEngine;
 import cz.craftmania.crafttweaks.crafttweaks.utils.console.EngineInterface;
-import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -44,11 +42,6 @@ public final class Main extends JavaPlugin {
         // Instance
         instance = this;
         log = this.getLogger();
-
-        // Packet Events Preload
-        PacketEvents.setAPI(SpigotPacketEventsBuilder.build(this));
-        PacketEvents.getAPI().getSettings().debug(false).bStats(false).checkForUpdates(false);
-        PacketEvents.getAPI().load();
     }
 
     @Override
@@ -75,7 +68,6 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        PacketEvents.getAPI().terminate();
         instance = null;
     }
 
@@ -156,12 +148,6 @@ public final class Main extends JavaPlugin {
                 return;
             }
             manager.registerEvents(new AnvilUnlimitedRepairFix(), this);
-        }
-
-        if (fakeEncryptionChat) {
-            Logger.info("Aktivace fake encryptování chatu a blokace Mojang reportů.");
-            PacketEvents.getAPI().getEventManager().registerListener(new ChatEncryptionListener());
-            PacketEvents.getAPI().init();
         }
 
         if (villagerTradeMaterialRemoverEnabled) {
